@@ -11,6 +11,38 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+var plugins = [
+  // new webpack.DefinePlugin({
+  //   'process.env': require('../config/dev.env')
+  // }),
+  new webpack.HotModuleReplacementPlugin(),
+  // new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
+  new webpack.NoEmitOnErrorsPlugin(),
+  // https://github.com/ampedandwired/html-webpack-plugin
+  // copy custom static assets
+  new CopyWebpackPlugin([
+    {
+      from: path.resolve(__dirname, '../static'),
+      to: config.dev.assetsSubDirectory,
+      ignore: ['.*']
+    }
+  ])
+]
+const entryList = utils.getEntryList('./src/pages/**/*.html');
+
+Object.keys(entryList).forEach((key)=>{
+  console.log('filename',`${key}.html`);
+  
+  console.log('template',path.resolve(__dirname, `.${entryList[key]}`));
+  plugins.push(new HtmlWebpackPlugin({
+    filename: `${key}.html`,
+    template: path.resolve(__dirname, `.${entryList[key]}`),
+    inject: true,
+    chunks: [key]
+  }))
+})
+
+
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   //新增mode 做了很多优化 地址 https://webpack.docschina.org/concepts/mode/#src/components/Sidebar/Sidebar.jsx
@@ -45,29 +77,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     }
   },
-  plugins: [
-    // mode: 'development',
-    // new webpack.DefinePlugin({
-    //   'process.env': require('../config/dev.env')
-    // }),
-    new webpack.HotModuleReplacementPlugin(),
-    // new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
-    new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      inject: true
-    }),
-    // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.dev.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ])
-  ]
+  plugins: plugins
 })
 
 module.exports = new Promise((resolve, reject) => {
