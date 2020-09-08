@@ -108,7 +108,7 @@ var plugins = [
     ignore: ['.*']
   }])
 ]
-const entryList = utils.getEntryList('./src/pages/**/*.html');
+const entryList = utils.getEntryList().html;
 Object.keys(entryList).forEach((key) => {
   console.log('filename', path.resolve(__dirname, '../dist/' + `${key}.html`));
   console.log('template', path.resolve(__dirname, `.${entryList[key]}`));

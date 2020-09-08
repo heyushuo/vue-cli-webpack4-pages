@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="home">我是home页面</div>
+    <div class="home">我是详情页面</div>
     <div @click="change">{{name}}</div>
   </div>
 </template>
@@ -24,7 +24,7 @@
   };
 </script>
 <style lang="less" scoped>
-  @import url(./home.less);
+  @import url(./index.less);
 
   .home {
     display: flex;
