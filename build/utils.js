@@ -6,14 +6,28 @@ const config = require("../config");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const packageConfig = require("../package.json");
 const glob = require('glob')
-exports.getEntryList = function(path) {
-  var files = glob.sync(path);
-  var map = {};
-  files.forEach(item => {
-    var name = item.split('/')[3]; //作为入口的名字
-    map[name] = item;
-  });
-  return map
+// exports.getEntryList = function(path) {
+//   var files = glob.sync(path);
+//   var map = {};
+//   files.forEach(item => {
+//     console.log(item);
+//     var name = item.split('/')[3]; //作为入口的名字
+//     map[name] = item;
+//   });
+//   return map
+// }
+
+exports.getEntryList = function () {
+  var files = glob.sync('./src/pages/**/*.html');
+  var map = {html:{},js:{}};
+  files.forEach(function (entry, i) {
+      var baseName = path.basename(entry) //返回 文件名.html
+      var extname = path.extname(entry);  //返回 .html
+      var fileName = baseName.replace(extname, '');
+      map['js'][fileName] = entry.replace(baseName,'main.js');
+      map['html'][fileName] = entry;
+  })
+  return map;
 }
 
 exports.assetsPath = function(_path) {
@@ -53,7 +67,7 @@ exports.cssLoaders = function(options) {
       //   use: loaders,
       //   fallback: 'vue-style-loader'
       // })
-      return [MiniCssExtractPlugin.loader].concat(loaders);
+      return [MiniCssExtractPlugin.loader,'cache-loader'].concat(loaders);
     } else {
       return ["vue-style-loader"].concat(loaders);
     }

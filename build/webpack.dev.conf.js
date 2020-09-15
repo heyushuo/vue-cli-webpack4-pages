@@ -28,11 +28,10 @@ var plugins = [
     }
   ])
 ]
-const entryList = utils.getEntryList('./src/pages/**/*.html');
+const entryList = utils.getEntryList().html;
 
 Object.keys(entryList).forEach((key)=>{
   console.log('filename',`${key}.html`);
-  
   console.log('template',path.resolve(__dirname, `.${entryList[key]}`));
   plugins.push(new HtmlWebpackPlugin({
     filename: `${key}.html`,
