@@ -1,10 +1,10 @@
 import Vue from "vue";
-import Index from "./index.vue";
+import Home from "./home.vue";
 import "./index.less";
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
-  render: h => h(Index)
+  render: h => h(Home)
 });
