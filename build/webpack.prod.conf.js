@@ -149,11 +149,22 @@ const webpackConfig = merge(baseWebpackConfig, {
     /*压缩js代码入口，是否开启minimizer，
       例如TerserWebpackPlugin插件，性能比UglifyJSPlugin好
       默认引入生产模式为true,所以不用操作，可以手动开启和调节minimizer选项*/
-    // minimize: false
+    minimize: false,
     // 对于动态导入模块，默认使用 webpack v4+ 提供的全新的通用分块策略(common chunk strategy)。
     // 请在 SplitChunksPlugin 页面中查看配置其行为的可用选项。
     splitChunks: {
       chunks: 'all',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
     },
     runtimeChunk: 'single',
     // minimizer: [
