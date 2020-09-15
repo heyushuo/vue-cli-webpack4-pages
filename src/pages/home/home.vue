@@ -6,7 +6,7 @@
 </template>
 
 <script>
-// import {getUrlParam} from '@/utils'
+import {getUrlParam} from '@/utils'
 import requet from '@/libs/request'
 export default {
   created() {},
@@ -26,7 +26,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import url(./home.less);
 .home {
   display: flex;
   font-size: 30px;

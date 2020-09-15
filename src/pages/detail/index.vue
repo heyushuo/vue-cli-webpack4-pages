@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import requet from '@/libs/request'
+import {getUrlParam} from '@/utils'
   export default {
     created() {},
     mounted() {},

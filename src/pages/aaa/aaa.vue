@@ -7,7 +7,7 @@
 
 <script>
 import {getUrlParam} from '@/utils'
-import requet from '@/libs/request'
+// import requet from '@/libs/request'
 export default {
   created() {},
   mounted() {},
